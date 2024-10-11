@@ -1,4 +1,4 @@
-# CURP Class Documentation
+# PHP CURP Generator
 
 ## Overview
 

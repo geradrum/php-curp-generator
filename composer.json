@@ -1,0 +1,24 @@
+{
+    "name": "geradrum/curp",
+    "description": "CURP generator",
+    "version": "0.1",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "files": [
+            "src/Support/helpers.php"
+        ],
+        "psr-4": {
+            "Geradrum\\Curp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gerardo Ramirez",
+            "email": "gera.96@icloud.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4"
+    }
+}

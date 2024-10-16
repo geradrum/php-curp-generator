@@ -74,19 +74,11 @@ class Curp
      * Constructor.
      *
      * @param array $data
+     * @param array $options
      */
-    public function __construct(array $data)
+    public function __construct(array $data, array $options = [])
     {
-        // Validate that all required fields are present
-        foreach ($this->requiredFields as $field) {
-            if (empty($data[$field])) {
-                throw new InvalidArgumentException("Field '{$field}' is required.");
-            }
-        }
-
-        foreach ($data as $field => $value) {
-            $this->validateField($field, $value);
-        }
+        $this->validateFields($data);
 
         $this->name = normalize(mb_strtoupper($data['name']));
         $this->lastname = normalize(mb_strtoupper($data['lastname']));
@@ -102,6 +94,7 @@ class Curp
             $this->birthdate,
             $this->entity,
             $this->gender,
+            $options,
         );
     }
 
@@ -116,6 +109,32 @@ class Curp
         return new static($data);
     }
 
+    /**
+     * Validate fields.
+     *
+     * @param array $data
+     * @return void
+     */
+    public function validateFields(array $data): void
+    {
+        foreach ($this->requiredFields as $field) {
+            if (empty($data[$field])) {
+                throw new InvalidArgumentException("Field '{$field}' is required.");
+            }
+        }
+
+        foreach ($data as $field => $value) {
+            $this->validateField($field, $value);
+        }
+    }
+
+    /**
+     * Validate field.
+     *
+     * @param string $field
+     * @param $value
+     * @return void
+     */
     protected function validateField(string $field, $value): void
     {
         if (! Validator::validate($field, $value)) {
@@ -132,11 +151,12 @@ class Curp
      * @param DateTime $birthdate
      * @param Entity $entity
      * @param string $gender
+     * @param array $options
      * @return string
      */
-    protected function generateCurp(string $name, string $lastname, string $maternalLastname, DateTime $birthdate, Entity $entity, string $gender): string
+    protected function generateCurp(string $name, string $lastname, string $maternalLastname, DateTime $birthdate, Entity $entity, string $gender, array $options = []): string
     {
-        return Generator::make($name, $lastname, $maternalLastname, $birthdate, $entity, $gender)->generate();
+        return Generator::make($name, $lastname, $maternalLastname, $birthdate, $entity, $gender, $options)->generate();
     }
 
     /**

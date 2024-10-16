@@ -24,7 +24,7 @@ To use the `Curp` class, you need to create an instance of it with the required 
 ```php
 use Geradrum\Curp\Curp;
 use Geradrum\Curp\Models\Entity;
-use Geradrum\Curp\Models\Entity;
+use Geradrum\Curp\Models\Gender;
 
 try {
     // Instantiate the Curp class

@@ -94,4 +94,15 @@ class Validator
     {
         return ! empty($value) && is_string($value) && in_array($value, ['H', 'M']);
     }
+
+    /**
+     * Validate options.
+     *
+     * @param $value
+     * @return bool
+     */
+    public static function validateOptions($value): bool
+    {
+        return is_array($value);
+    }
 }

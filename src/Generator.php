@@ -59,6 +59,13 @@ class Generator
     protected string $curp;
 
     /**
+     * Options.
+     *
+     * @var array
+     */
+    protected array $options;
+
+    /**
      * Constructor
      *
      * @param string $name
@@ -67,8 +74,9 @@ class Generator
      * @param DateTime $birthdate
      * @param Entity $entity
      * @param string $gender
+     * @param array $options
      */
-    public function __construct(string $name, string $lastname, string $maternalLastname, DateTime $birthdate, Entity $entity, string $gender)
+    public function __construct(string $name, string $lastname, string $maternalLastname, DateTime $birthdate, Entity $entity, string $gender, array $options = [])
     {
         $this->name = $name;
         $this->lastname = $lastname;
@@ -77,6 +85,7 @@ class Generator
         $this->entity = $entity;
         $this->gender = $gender;
         $this->curp = 'XXXXXXXXXXXXXXXXXX';
+        $this->options = $options;
     }
 
     /**
@@ -88,11 +97,12 @@ class Generator
      * @param DateTime $birthdate
      * @param Entity $entity
      * @param string $gender
+     * @param array $options
      * @return self
      */
-    public static function make(string $name, string $lastname, string $maternalLastname, DateTime $birthdate, Entity $entity, string $gender): self
+    public static function make(string $name, string $lastname, string $maternalLastname, DateTime $birthdate, Entity $entity, string $gender, array $options = []): self
     {
-        return new self($name, $lastname, $maternalLastname, $birthdate, $entity, $gender);
+        return new self($name, $lastname, $maternalLastname, $birthdate, $entity, $gender, $options);
     }
 
     /**
@@ -259,6 +269,11 @@ class Generator
      */
     protected function generateVerificationCode(): void
     {
+        if (($this->options['verification_digits'] ?? null) === false) {
+            print_r('asdasd');
+            return;
+        }
+
         $code = (int) $this->birthdate->format('Y') < 2000 ? '0' : 'A';
         $this->curp = substr_replace($this->curp, $code, 16, 1);
     }
@@ -270,6 +285,10 @@ class Generator
      */
     protected function generateVerificationDigit(): void
     {
+        if (($this->options['verification_digits'] ?? null) === false) {
+            return;
+        }
+
         $counter = 18;
         $sum = 0;
         $number = 0;

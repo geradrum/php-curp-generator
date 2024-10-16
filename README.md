@@ -22,6 +22,8 @@ To use the `Curp` class, you need to create an instance of it with the required 
 ### Example
 
 ```php
+<?php
+
 use Geradrum\Curp\Curp;
 use Geradrum\Curp\Models\Entity;
 use Geradrum\Curp\Models\Gender;
@@ -34,9 +36,11 @@ try {
         'maternal_lastname' => 'García',
         'birthdate' => '1990-05-15',
         'entity' => Entity::JALISCO,
-        'gender' => Gender::MALE, 
+        'gender' => Gender::MALE,
+    ], [ // Optional parameter
+        'verification_digits' => true, // Set false to keep verification digits as XX
     ]);
-    
+
     // Output the generated CURP
     echo "Generated CURP: " . $curp->getCurp() . "\n";
 } catch (InvalidArgumentException $e) {

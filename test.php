@@ -15,8 +15,8 @@ try {
         'birthdate' => '1990-05-15',
         'entity' => Entity::JALISCO,
         'gender' => Gender::MALE,
-    ], [
-        'verification_digits' => false,
+    ], [ // Optional parameter
+        'verification_digits' => true, // Set false to keep verification digits as XX
     ]);
 
     // Output the generated CURP

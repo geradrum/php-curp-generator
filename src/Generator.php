@@ -135,16 +135,16 @@ class Generator
     protected function generateName(): void
     {
         // First part
-        $names = array_filter(explode(' ', $this->name), function ($name) {
+        $names = array_values(array_filter(explode(' ', $this->name), function ($name) {
             // Remove prepositions from name
             return ! in_array($name, BlacklistDictionary::prepositions());
-        });
+        }));
 
         if (count($names) > 1 && in_array($names[0], BlacklistDictionary::names())) {
             // Remove "invalid" names when two or more names are present
-            $names = array_filter($names, function ($name) {
+            $names = array_values(array_filter($names, function ($name) {
                 return ! in_array($name, BlacklistDictionary::names());
-            });
+            }));
         }
 
         $this->curp = substr_replace($this->curp, substr($names[0], 0, 1), 3, 1);
@@ -163,10 +163,10 @@ class Generator
      */
     protected function generateLastname(): void
     {
-        $lastnames = array_filter(explode(' ', $this->lastname), function ($name) {
+        $lastnames = array_values(array_filter(explode(' ', $this->lastname), function ($name) {
             // Remove prepositions from name
             return ! in_array($name, BlacklistDictionary::prepositions());
-        });
+        }));
 
         $firstLetter = substr($lastnames[0], 0, 1);
         $firstVowel = substr(preg_replace('/[^AEIOU]/', '', $lastnames[0]), 0 ,1);
@@ -190,16 +190,16 @@ class Generator
     {
         $replacement = 'X';
 
-        if (is_null($this->maternalLastname)) {
+        if (empty($this->maternalLastname)) {
             $this->curp = substr_replace($this->curp, $replacement, 2, 1);
             $this->curp = substr_replace($this->curp, $replacement, 14, 1);
             return;
         }
 
-        $maternalLastNames = array_filter(explode(' ', $this->maternalLastname), function ($name) {
+        $maternalLastNames = array_values(array_filter(explode(' ', $this->maternalLastname), function ($name) {
             // Remove prepositions from name
             return ! in_array($name, BlacklistDictionary::prepositions());
-        });
+        }));
 
         $firstLetter = substr($maternalLastNames[0], 0, 1);
         $firstConsonant = substr(preg_replace('/[AEIOU]/', '', substr($maternalLastNames[0], 1)), 0 ,1);
@@ -270,7 +270,6 @@ class Generator
     protected function generateVerificationCode(): void
     {
         if (($this->options['verification_digits'] ?? null) === false) {
-            print_r('asdasd');
             return;
         }
 

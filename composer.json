@@ -1,7 +1,7 @@
 {
     "name": "geradrum/php-curp-generator",
     "description": "CURP generator",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "type": "library",
     "license": "MIT",
     "autoload": {

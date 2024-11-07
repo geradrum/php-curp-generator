@@ -57,7 +57,7 @@ class Validator
      */
     public static function validateMaternalLastname($value): bool
     {
-        return ! empty($value) && is_string($value);
+        return empty($value) || is_string($value);
     }
 
     /**
